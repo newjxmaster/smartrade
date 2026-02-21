@@ -63,7 +63,7 @@ const defaultFrontendConstants: FrontendConstants = {
     },
     sectors: ['Tech', 'Finance', 'Healthcare', 'Energy', 'Consumer', 'Industrial'],
     labels: {
-        app_name: 'StockMart',
+        app_name: 'SmarTrade',
         app_tagline: 'Virtual Trading Simulation',
         auth: {
             login_title: 'Welcome Back',

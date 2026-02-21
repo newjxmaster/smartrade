@@ -34,7 +34,7 @@ export const Header: React.FC<HeaderProps> = ({ showNav = true, variant = 'defau
             <div className="header-brand">
                 <Link to={user?.role === 'admin' ? '/admin' : '/trade'} className="header-logo">
                     <TrendingUp size={28} />
-                    <span>StockMart</span>
+                    <span>SmarTrade</span>
                 </Link>
 
                 {variant === 'admin' && (

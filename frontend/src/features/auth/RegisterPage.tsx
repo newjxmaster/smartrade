@@ -159,7 +159,7 @@ export const RegisterPage: React.FC = () => {
                     <div className="auth-header">
                         <div className="auth-logo">
                             <TrendingUp size={40} />
-                            <span>StockMart</span>
+                            <span>SmarTrade</span>
                         </div>
                         <h1 className="auth-title">Create Account</h1>
                         <p className="auth-subtitle">Join the trading simulation</p>

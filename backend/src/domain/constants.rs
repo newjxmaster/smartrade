@@ -13,6 +13,118 @@
 pub const PRICE_SCALE: i64 = 10_000;
 
 // =============================================================================
+// CURRENCY CONFIGURATION
+// =============================================================================
+
+/// Currency-specific configuration
+pub mod currency {
+    use super::PRICE_SCALE;
+
+    /// Supported currencies
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    pub enum Currency {
+        USD,
+        XOF,
+        EUR,
+    }
+
+    impl Currency {
+        /// Get price scale for this currency
+        /// XOF has no decimals (integer currency)
+        /// USD and EUR have 2 decimals
+        pub fn price_scale(&self) -> i64 {
+            match self {
+                Currency::USD => 10_000, // 4 decimal precision for calculations
+                Currency::XOF => 1,      // No decimals - XOF is integer-only
+                Currency::EUR => 10_000, // 4 decimal precision for calculations
+            }
+        }
+
+        /// Get display decimals
+        pub fn display_decimals(&self) -> u8 {
+            match self {
+                Currency::USD => 2,
+                Currency::XOF => 0,
+                Currency::EUR => 2,
+            }
+        }
+
+        /// Get currency symbol
+        pub fn symbol(&self) -> &'static str {
+            match self {
+                Currency::USD => "$",
+                Currency::XOF => "CFA",
+                Currency::EUR => "€",
+            }
+        }
+
+        /// Get currency code
+        pub fn code(&self) -> &'static str {
+            match self {
+                Currency::USD => "USD",
+                Currency::XOF => "XOF",
+                Currency::EUR => "EUR",
+            }
+        }
+
+        /// Get locale for formatting
+        pub fn locale(&self) -> &'static str {
+            match self {
+                Currency::USD => "en-US",
+                Currency::XOF => "fr-FR",
+                Currency::EUR => "de-DE",
+            }
+        }
+
+        /// Symbol position: "before" or "after"
+        pub fn symbol_position(&self) -> &'static str {
+            match self {
+                Currency::USD => "before",
+                Currency::XOF => "after",
+                Currency::EUR => "after",
+            }
+        }
+
+        /// Default starting money for this currency
+        pub fn default_starting_money(&self) -> i64 {
+            match self {
+                // $100,000 USD
+                Currency::USD => 100_000 * self.price_scale(),
+                // 1,000,000 XOF (~$1,600 USD equivalent)
+                Currency::XOF => 1_000_000 * self.price_scale(),
+                // €100,000 EUR
+                Currency::EUR => 100_000 * self.price_scale(),
+            }
+        }
+    }
+
+    impl Default for Currency {
+        fn default() -> Self {
+            Currency::XOF
+        }
+    }
+
+    impl std::str::FromStr for Currency {
+        type Err = String;
+
+        fn from_str(s: &str) -> Result<Self, Self::Err> {
+            match s.to_uppercase().as_str() {
+                "USD" => Ok(Currency::USD),
+                "XOF" => Ok(Currency::XOF),
+                "EUR" => Ok(Currency::EUR),
+                _ => Err(format!("Unknown currency: {}", s)),
+            }
+        }
+    }
+
+    impl std::fmt::Display for Currency {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            write!(f, "{}", self.code())
+        }
+    }
+}
+
+// =============================================================================
 // TRADING CONSTANTS
 // =============================================================================
 

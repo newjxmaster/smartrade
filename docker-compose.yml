@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  smartrade:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - DATA_DIR=/app/data
+      - RUST_LOG=info
+    volumes:
+      - ./data:/app/data
+    restart: always

@@ -3236,3 +3236,13 @@
 {"seq":624,"timestamp":"2025-12-11T05:51:44.435227336Z","timestamp_unix":1765432304,"event_type":"UserLogin","user_id":194,"regno":"multiuser001","name":"Multi User One"}
 {"seq":625,"timestamp":"2025-12-11T05:52:14.318596489Z","timestamp_unix":1765432334,"event_type":"UserLogin","user_id":194,"regno":"multiuser001","name":"Multi User One"}
 {"seq":626,"timestamp":"2025-12-11T06:10:19.171607662Z","timestamp_unix":1765433419,"event_type":"UserRegistered","user_id":200,"regno":"DEMO001","name":"Demo Trader","initial_cash":484000000,"initial_portfolio_value":516000000}
+{"seq":1,"timestamp":"2026-02-21T17:21:37.101093Z","timestamp_unix":1771694497,"event_type":"UserRegistered","user_id":201,"regno":"newjxmaster","name":"Napole","initial_cash":507000000,"initial_portfolio_value":493000000}
+{"seq":1,"timestamp":"2026-02-21T17:26:13.398342Z","timestamp_unix":1771694773,"event_type":"UserRegistered","user_id":202,"regno":"Admin","name":"Admin","initial_cash":521000000,"initial_portfolio_value":479000000}
+{"seq":1,"timestamp":"2026-02-21T17:28:51.399151Z","timestamp_unix":1771694931,"event_type":"UserLogin","user_id":202,"regno":"Admin","name":"Admin"}
+{"seq":2,"timestamp":"2026-02-21T17:29:08.909892Z","timestamp_unix":1771694948,"event_type":"UserLogin","user_id":202,"regno":"Admin","name":"Admin"}
+{"seq":1,"timestamp":"2026-02-21T17:31:19.697939Z","timestamp_unix":1771695079,"event_type":"UserLogin","user_id":202,"regno":"Admin","name":"Admin"}
+{"seq":1,"timestamp":"2026-02-21T17:43:57.789150Z","timestamp_unix":1771695837,"event_type":"UserLogin","user_id":1,"regno":"admin","name":"Administrator"}
+{"seq":1,"timestamp":"2026-02-21T17:49:24.137590Z","timestamp_unix":1771696164,"event_type":"UserRegistered","user_id":2,"regno":"newjxmaster","name":"napole","initial_cash":511000000,"initial_portfolio_value":489000000}
+{"seq":1,"timestamp":"2026-02-21T17:54:40.535985Z","timestamp_unix":1771696480,"event_type":"UserLogin","user_id":2,"regno":"trader1","name":"Trader One"}
+{"seq":2,"timestamp":"2026-02-21T17:55:14.031841Z","timestamp_unix":1771696514,"event_type":"UserLogin","user_id":3,"regno":"trader2","name":"Trader Two"}
+{"seq":3,"timestamp":"2026-02-21T17:59:39.759988Z","timestamp_unix":1771696779,"event_type":"UserLogin","user_id":1,"regno":"admin","name":"Administrator"}
