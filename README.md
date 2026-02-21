@@ -4,7 +4,7 @@
 
 ### Real-time Multiplayer Stock Trading Game Platform
 
-### https://ayushmaanbhav.github.io/StockMart/
+###
 
 **The Ultimate Trading Competition Platform for Schools, Colleges & Gaming Events**
 
