@@ -1,6 +1,6 @@
 <div align="center">
 
-# StockMart
+# SmarTrade
 
 ### Real-time Multiplayer Stock Trading Game Platform
 
