@@ -2,11 +2,11 @@
 
 # SmarTrade
 
-### Real-time Multiplayer Stock Trading Game Platform
+### Real-time Multiplayer Stock Trading Platform for West Africa
 
 ###
 
-**The Ultimate Trading Competition Platform for Schools, Colleges & Gaming Events**
+**SME Stock Trading Platform with XOF (CFA Franc) Support - Built for Ivory Coast & West Africa**
 
 [![Game](https://img.shields.io/badge/🎮_Game-Trading%20Simulation-FF6B6B?style=for-the-badge)](#features)
 [![Multiplayer](https://img.shields.io/badge/👥_Multiplayer-100%2B_Concurrent-4ECDC4?style=for-the-badge)](#scalability)
@@ -30,7 +30,7 @@
 
 <br />
 
-<img src="docs/screenshots/trading-desk.png" alt="StockMart Trading Desk" width="800" />
+<img src="docs/screenshots/trading-desk.png" alt="SmarTrade Trading Desk" width="800" />
 
 *Professional trading desk with real-time charts, order book, portfolio tracking, and live leaderboard*
 
@@ -42,7 +42,7 @@
 
 ## Table of Contents
 
-- [Why StockMart?](#why-stockmart)
+- [Why SmarTrade?](#why-smartrade)
 - [For Event Organizers](#for-event-organizers)
 - [For College Administrators](#for-college-administrators)
 - [Game Modes](#game-modes)
@@ -63,13 +63,13 @@
 
 ---
 
-## Why StockMart?
+## Why SmarTrade?
 
-StockMart is a **production-ready multiplayer trading game platform** designed for event organizers, educational institutions, and gaming competitions. Host engaging trading battles with full control over every aspect of the game.
+SmarTrade is a **production-ready multiplayer trading game platform** designed for event organizers, educational institutions, and gaming competitions. Host engaging trading battles with full control over every aspect of the game.
 
 ### Perfect For
 
-| Audience | Why StockMart? |
+| Audience | Why SmarTrade? |
 |----------|---------------|
 | **Event Organizers** | Turnkey solution for trading competitions at hackathons, gaming events, corporate team-building |
 | **College Administrators** | Ready-to-deploy finance lab for economics, business, and finance courses |
@@ -89,7 +89,7 @@ StockMart is a **production-ready multiplayer trading game platform** designed f
 
 ## For Event Organizers
 
-Running a trading competition has never been easier. StockMart gives you complete control over your event.
+Running a trading competition has never been easier. SmarTrade gives you complete control over your event.
 
 ### What You Can Do
 
@@ -126,7 +126,7 @@ Running a trading competition has never been easier. StockMart gives you complet
 
 ## For College Administrators
 
-StockMart is designed with educational institutions in mind. Deploy once, use for years.
+SmarTrade is designed with educational institutions in mind. Deploy once, use for years.
 
 ### Deployment Benefits
 
@@ -140,7 +140,7 @@ StockMart is designed with educational institutions in mind. Deploy once, use fo
 
 ### Integration with Curriculum
 
-| Course | How StockMart Helps |
+| Course | How SmarTrade Helps |
 |--------|---------------------|
 | **Introduction to Finance** | Hands-on experience with order types, portfolios |
 | **Economics 101** | Demonstrate supply/demand, price discovery |
@@ -209,7 +209,7 @@ sequenceDiagram
 
 ## Configuration
 
-StockMart is highly configurable to match your event needs.
+SmarTrade is highly configurable to match your event needs.
 
 ### Game Configuration
 
@@ -271,7 +271,7 @@ Customize the stock roster in `backend/data/companies.json`:
 
 ## Scalability
 
-StockMart is built for performance with Rust and async architecture.
+SmarTrade is built for performance with Rust and async architecture.
 
 ### Performance Characteristics
 
@@ -292,7 +292,7 @@ StockMart is built for performance with Rust and async architecture.
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                 StockMart Backend (Rust)                     │
+│                 SmarTrade Backend (Rust)                     │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐  │
 │  │  WebSocket  │  │  Matching   │  │   DashMap (Lock-    │  │
 │  │   Handler   │──│   Engine    │──│   Free Concurrent)  │  │
@@ -342,8 +342,8 @@ StockMart is built for performance with Rust and async architecture.
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/stockmart.git
-cd stockmart
+git clone https://github.com/newjxmaster/smartrade.git
+cd smartrade
 
 # Start the backend (Terminal 1)
 cd backend
@@ -437,7 +437,7 @@ Educators and game masters have complete control over the trading environment:
 
 ## Architecture
 
-StockMart follows **Domain-Driven Design (DDD)** principles with a clean separation between backend and frontend:
+SmarTrade follows **Domain-Driven Design (DDD)** principles with a clean separation between backend and frontend:
 
 ```mermaid
 graph TB
@@ -503,7 +503,7 @@ graph TB
 
 ## Use Cases
 
-StockMart is designed for multiple audiences:
+SmarTrade is designed for multiple audiences:
 
 ### For Gamers
 
@@ -588,7 +588,7 @@ Trading Fundamentals          Technical Skills
 
 ## Testing
 
-StockMart has comprehensive test coverage across backend and frontend:
+SmarTrade has comprehensive test coverage across backend and frontend:
 
 ### Backend Tests (Rust)
 
@@ -673,7 +673,7 @@ npm run test:auth
 
 ## Extensibility
 
-StockMart is designed to be extended:
+SmarTrade is designed to be extended:
 
 ### Adding New Order Types
 
@@ -788,6 +788,6 @@ This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENS
 
 **Built with love for educators, students, and trading enthusiasts**
 
-[Report Bug](https://github.com/yourusername/stockmart/issues) · [Request Feature](https://github.com/yourusername/stockmart/issues) · [Documentation](./docs/)
+[Report Bug](https://github.com/newjxmaster/smartrade/issues) · [Request Feature](https://github.com/newjxmaster/smartrade/issues) · [Documentation](./docs/)
 
 </div>
