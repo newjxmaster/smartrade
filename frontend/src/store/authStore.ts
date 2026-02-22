@@ -176,8 +176,13 @@ if (storedAuth && sessionToken) {
     try {
         const parsed = JSON.parse(storedAuth);
         if (parsed.state?.isAuthenticated && parsed.state?.user?.id) {
-            // We have stored auth, mark as reconnecting until verified
-            useAuthStore.setState({ isReconnecting: true });
+            // CRITICAL FIX: Mark as NOT authenticated until backend confirms
+            // This prevents race conditions where components send auth-required
+            // messages before the backend has validated the token
+            useAuthStore.setState({ 
+                isReconnecting: true,
+                isAuthenticated: false  // Will be set true only after AuthSuccess
+            });
             
             // If WebSocket is already connected, send auth immediately
             if (websocketService.getConnectionStatus()) {
@@ -197,6 +202,12 @@ websocketService.on('connected', () => {
     const { isReconnecting, isAuthenticated } = useAuthStore.getState();
     
     if (token && (isReconnecting || isAuthenticated)) {
+        // CRITICAL FIX: Ensure we're in reconnecting state with isAuthenticated=false
+        // until the backend confirms our auth token
+        useAuthStore.setState({ 
+            isReconnecting: true,
+            isAuthenticated: false 
+        });
         // Send auth request to verify session
         websocketService.send({ type: 'Auth', payload: { token } });
     }
@@ -204,6 +215,16 @@ websocketService.on('connected', () => {
 
 // Handle auth-specific errors (e.g., token expired, invalid token)
 websocketService.on('Error', (payload: { code?: string; message?: string }) => {
+    const { isReconnecting } = useAuthStore.getState();
+    
+    // CRITICAL FIX: During reconnection, ignore NOT_AUTHENTICATED errors
+    // These happen when components send auth-required messages before
+    // the backend has finished validating our token. We should NOT logout.
+    if (isReconnecting && payload.code === 'NOT_AUTHENTICATED') {
+        // Silently ignore - auth verification is still pending
+        return;
+    }
+    
     // If we get an auth-related error, clear the auth state
     if (payload.code === 'NOT_AUTHENTICATED' || payload.code === 'AUTH_FAILED' || 
         payload.message?.toLowerCase().includes('auth') ||
