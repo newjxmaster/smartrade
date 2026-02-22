@@ -1,7 +1,7 @@
 # Multi-stage build for SmarTrade
 
 # Stage 1: Build Rust backend
-FROM rust:1.75-slim as backend-builder
+FROM rust:1.84-slim as backend-builder
 WORKDIR /app/backend
 COPY backend/Cargo.toml backend/Cargo.lock ./
 COPY backend/src ./src
@@ -52,10 +52,8 @@ RUN echo 'server { \
 }' > /etc/nginx/sites-available/default
 
 # Startup script
-RUN echo '#!/bin/bash \
-DATA_DIR=/app/data /app/backend/stockmart-backend & \
-nginx -g "daemon off;" \
-' > /app/start.sh && chmod +x /app/start.sh
+COPY start.sh /app/start.sh
+RUN chmod +x /app/start.sh
 
 EXPOSE 80 3001
 CMD ["/app/start.sh"]

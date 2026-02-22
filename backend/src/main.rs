@@ -10,6 +10,7 @@ use tower_http::cors::{Any, CorsLayer};
 use tower_http::trace::TraceLayer;
 use tracing::info;
 
+mod agent;
 mod api;
 mod config;
 mod domain;
@@ -37,6 +38,7 @@ use crate::service::persistence::PersistenceService;
 use crate::service::session::SessionManager;
 use crate::service::token::TokenService;
 use crate::service::trade_history::TradeHistoryService;
+use crate::agent::SimulationRuntime;
 
 #[tokio::main]
 async fn main() {
@@ -249,6 +251,7 @@ async fn initialize_services(
     // Initialize Admin Service
     let admin_service = Arc::new(AdminService::new(
         engine.clone(),
+        market_service.clone(),
         company_repo.clone(),
         user_repo.clone(),
     ));
@@ -300,9 +303,22 @@ async fn initialize_services(
     });
     info!("Trade logging task started");
 
+    // Initialize AI Agent Simulation Runtime (optional - continues without agents if Ollama unavailable)
+    let agent_runtime = match initialize_agent_runtime(market_service.clone()).await {
+        Ok(runtime) => {
+            info!("✅ AI Agent simulation runtime initialized");
+            Some(runtime)
+        }
+        Err(e) => {
+            info!("⚠️  AI Agent runtime not available: {}. Continuing without agents.", e);
+            None
+        }
+    };
+
     // Create shared application state
     let server_start_time = chrono::Utc::now().timestamp();
     let state = Arc::new(AppState {
+        agent_runtime,
         engine,
         market: market_service,
         admin: admin_service,
@@ -375,6 +391,50 @@ async fn initialize_test_data(
             info!("Restored orderbooks for {} companies", count);
         }
     }
+}
+
+/// Initialize the AI Agent simulation runtime.
+/// 
+/// This connects to Ollama and starts the agent simulation loop.
+/// Returns None if Ollama is unavailable.
+async fn initialize_agent_runtime(
+    market: Arc<MarketService>,
+) -> Result<Arc<SimulationRuntime>, Box<dyn std::error::Error>> {
+    use crate::agent::OllamaClient;
+    
+    // Try to connect to Ollama with fallback model support
+    let mut ollama = OllamaClient::with_fallback(
+        "http://localhost:11434",
+        "llama3.1:8b",    // Primary model
+        "llama3.2:3b"     // Fallback model
+    );
+    
+    // Verify Ollama is available and auto-select best model
+    ollama.auto_select_model().await?;
+    
+    if ollama.is_using_fallback() {
+        info!("Using fallback LLM model: {}", ollama.current_model());
+    } else {
+        info!("Using primary LLM model: {}", ollama.current_model());
+    }
+    
+    // Create simulation runtime with 30-second ticks
+    let runtime = Arc::new(SimulationRuntime::new(
+        market,
+        ollama,
+        30, // 30 seconds = 1 simulation day
+    ));
+    
+    // Spawn initial agents
+    runtime.spawn_initial_agents(10, 3).await; // 10 traders, 3 news agents
+    
+    // Start the simulation loop in background
+    let runtime_clone = runtime.clone();
+    tokio::spawn(async move {
+        runtime_clone.run().await;
+    });
+    
+    Ok(runtime)
 }
 
 /// Build the application router.

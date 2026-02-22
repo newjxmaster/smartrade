@@ -1,19 +1,5 @@
 [
   {
-    "id": 3,
-    "regno": "trader2",
-    "name": "Trader Two",
-    "password_hash": "pass123",
-    "role": "trader",
-    "money": 1000000000,
-    "locked_money": 0,
-    "margin_locked": 0,
-    "chat_enabled": true,
-    "banned": false,
-    "created_at": 1700000002,
-    "portfolio": []
-  },
-  {
     "id": 2,
     "regno": "trader1",
     "name": "Trader One",
@@ -28,99 +14,18 @@
     "portfolio": []
   },
   {
-    "id": 4,
-    "regno": "napole",
-    "name": "napole",
+    "id": 3,
+    "regno": "trader2",
+    "name": "Trader Two",
     "password_hash": "pass123",
     "role": "trader",
-    "money": 509000000,
-    "locked_money": 25000000,
+    "money": 1000000000,
+    "locked_money": 0,
     "margin_locked": 0,
     "chat_enabled": true,
     "banned": false,
-    "created_at": 1771708284,
-    "portfolio": [
-      {
-        "user_id": 4,
-        "symbol": "ZOMATO",
-        "qty": 52,
-        "short_qty": 0,
-        "locked_qty": 52,
-        "average_buy_price": 1000000
-      },
-      {
-        "user_id": 4,
-        "symbol": "PAYTM",
-        "qty": 48,
-        "short_qty": 0,
-        "locked_qty": 0,
-        "average_buy_price": 1000000
-      },
-      {
-        "user_id": 4,
-        "symbol": "TCS",
-        "qty": 40,
-        "short_qty": 0,
-        "locked_qty": 0,
-        "average_buy_price": 1000000
-      },
-      {
-        "user_id": 4,
-        "symbol": "TATAMOTORS",
-        "qty": 46,
-        "short_qty": 0,
-        "locked_qty": 0,
-        "average_buy_price": 1000000
-      },
-      {
-        "user_id": 4,
-        "symbol": "RELIANCE",
-        "qty": 41,
-        "short_qty": 0,
-        "locked_qty": 0,
-        "average_buy_price": 1000000
-      },
-      {
-        "user_id": 4,
-        "symbol": "ICICIBANK",
-        "qty": 55,
-        "short_qty": 0,
-        "locked_qty": 0,
-        "average_buy_price": 1000000
-      },
-      {
-        "user_id": 4,
-        "symbol": "HDFCBANK",
-        "qty": 47,
-        "short_qty": 0,
-        "locked_qty": 0,
-        "average_buy_price": 1000000
-      },
-      {
-        "user_id": 4,
-        "symbol": "INFY",
-        "qty": 41,
-        "short_qty": 0,
-        "locked_qty": 0,
-        "average_buy_price": 1000000
-      },
-      {
-        "user_id": 4,
-        "symbol": "ADANIENT",
-        "qty": 50,
-        "short_qty": 0,
-        "locked_qty": 0,
-        "average_buy_price": 1000000
-      },
-      {
-        "user_id": 4,
-        "symbol": "SUNPHARMA",
-        "qty": 46,
-        "short_qty": 0,
-        "locked_qty": 0,
-        "average_buy_price": 1000000
-      }
-    ]
+    "created_at": 1700000002,
+    "portfolio": []
   },
   {
     "id": 1,

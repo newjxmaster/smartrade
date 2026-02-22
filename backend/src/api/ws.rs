@@ -26,9 +26,9 @@ use crate::presentation::websocket::{
         log_connection_established, send_initial_config, BroadcastSubscriptions, ConnectionState,
     },
     handlers::{
-        handle_admin_action, handle_auth, handle_cancel_order, handle_chat, handle_get_depth,
-        handle_get_portfolio, handle_get_stock_trades, handle_get_trade_history, handle_login,
-        handle_place_order, handle_register, handle_request_sync, handle_subscribe,
+        handle_admin_action, handle_agent_action, handle_auth, handle_cancel_order, handle_chat,
+        handle_get_depth, handle_get_portfolio, handle_get_stock_trades, handle_get_trade_history,
+        handle_login, handle_place_order, handle_register, handle_request_sync, handle_subscribe,
     },
     messages::{ClientMessage, CurrencyConfigPayload, ServerMessage},
 };
@@ -273,6 +273,12 @@ async fn handle_client_message(
 
         ClientMessage::GetStockTrades { symbol, count } => {
             handle_get_stock_trades(sender, state, &symbol, count).await;
+        }
+
+        ClientMessage::AgentAction { .. } => {
+            // Agent actions are handled through a separate task to avoid Send issues
+            let msg = ServerMessage::error("NOT_IMPLEMENTED", "Agent actions not yet available");
+            connection::send_message(sender, &msg).await;
         }
     }
 

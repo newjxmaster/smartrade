@@ -1,43 +1,13 @@
 [
   {
-    "id": 9,
-    "symbol": "ZOMATO",
-    "name": "Zomato Ltd.",
-    "sector": "Tech",
-    "total_shares": 500000,
+    "id": 5,
+    "symbol": "ICICIBANK",
+    "name": "ICICI Bank Ltd.",
+    "sector": "Finance",
+    "total_shares": 2500000,
     "bankrupt": false,
     "price_precision": 2,
-    "volatility": 50
-  },
-  {
-    "id": 12,
-    "symbol": "KWM",
-    "name": "KWASM",
-    "sector": "Tech",
-    "total_shares": 1000000,
-    "bankrupt": false,
-    "price_precision": 2,
-    "volatility": 25
-  },
-  {
-    "id": 10,
-    "symbol": "PAYTM",
-    "name": "One97 Communications",
-    "sector": "Tech",
-    "total_shares": 400000,
-    "bankrupt": false,
-    "price_precision": 2,
-    "volatility": 55
-  },
-  {
-    "id": 2,
-    "symbol": "TCS",
-    "name": "Tata Consultancy Services",
-    "sector": "Tech",
-    "total_shares": 4000000,
-    "bankrupt": false,
-    "price_precision": 2,
-    "volatility": 12
+    "volatility": 20
   },
   {
     "id": 6,
@@ -50,54 +20,24 @@
     "volatility": 35
   },
   {
-    "id": 1,
-    "symbol": "RELIANCE",
-    "name": "Reliance Industries Ltd.",
-    "sector": "Energy",
-    "total_shares": 5000000,
+    "id": 7,
+    "symbol": "SUNPHARMA",
+    "name": "Sun Pharmaceutical",
+    "sector": "Healthcare",
+    "total_shares": 1200000,
     "bankrupt": false,
     "price_precision": 2,
-    "volatility": 15
+    "volatility": 22
   },
   {
-    "id": 5,
-    "symbol": "ICICIBANK",
-    "name": "ICICI Bank Ltd.",
-    "sector": "Finance",
-    "total_shares": 2500000,
-    "bankrupt": false,
-    "price_precision": 2,
-    "volatility": 20
-  },
-  {
-    "id": 11,
-    "symbol": "RYC",
-    "name": "Ride Your Cities",
+    "id": 10,
+    "symbol": "PAYTM",
+    "name": "One97 Communications",
     "sector": "Tech",
-    "total_shares": 1000000,
+    "total_shares": 400000,
     "bankrupt": false,
     "price_precision": 2,
-    "volatility": 25
-  },
-  {
-    "id": 3,
-    "symbol": "HDFCBANK",
-    "name": "HDFC Bank Ltd.",
-    "sector": "Finance",
-    "total_shares": 3500000,
-    "bankrupt": false,
-    "price_precision": 2,
-    "volatility": 18
-  },
-  {
-    "id": 4,
-    "symbol": "INFY",
-    "name": "Infosys Ltd.",
-    "sector": "Tech",
-    "total_shares": 3000000,
-    "bankrupt": false,
-    "price_precision": 2,
-    "volatility": 14
+    "volatility": 55
   },
   {
     "id": 8,
@@ -110,13 +50,53 @@
     "volatility": 45
   },
   {
-    "id": 7,
-    "symbol": "SUNPHARMA",
-    "name": "Sun Pharmaceutical",
-    "sector": "Healthcare",
-    "total_shares": 1200000,
+    "id": 4,
+    "symbol": "INFY",
+    "name": "Infosys Ltd.",
+    "sector": "Tech",
+    "total_shares": 3000000,
     "bankrupt": false,
     "price_precision": 2,
-    "volatility": 22
+    "volatility": 14
+  },
+  {
+    "id": 1,
+    "symbol": "RELIANCE",
+    "name": "Reliance Industries Ltd.",
+    "sector": "Energy",
+    "total_shares": 5000000,
+    "bankrupt": false,
+    "price_precision": 2,
+    "volatility": 15
+  },
+  {
+    "id": 3,
+    "symbol": "HDFCBANK",
+    "name": "HDFC Bank Ltd.",
+    "sector": "Finance",
+    "total_shares": 3500000,
+    "bankrupt": false,
+    "price_precision": 2,
+    "volatility": 18
+  },
+  {
+    "id": 9,
+    "symbol": "ZOMATO",
+    "name": "Zomato Ltd.",
+    "sector": "Tech",
+    "total_shares": 500000,
+    "bankrupt": false,
+    "price_precision": 2,
+    "volatility": 50
+  },
+  {
+    "id": 2,
+    "symbol": "TCS",
+    "name": "Tata Consultancy Services",
+    "sector": "Tech",
+    "total_shares": 4000000,
+    "bankrupt": false,
+    "price_precision": 2,
+    "volatility": 12
   }
 ]

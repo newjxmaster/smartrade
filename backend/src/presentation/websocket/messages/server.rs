@@ -328,6 +328,55 @@ pub enum ServerMessage {
         bids: Vec<AdminOpenOrderUI>,
         asks: Vec<AdminOpenOrderUI>,
     },
+
+    // =========================================================================
+    // AI AGENT RESPONSES
+    // =========================================================================
+    /// Agent list response
+    AgentList { agents: Vec<serde_json::Value> },
+
+    /// Agent chat response
+    AgentChatResponse { agent_id: u64, response: String },
+
+    /// Agent profile response
+    AgentProfile {
+        id: u64,
+        name: String,
+        agent_type: String,
+        recent_thoughts: Vec<String>,
+    },
+
+    /// Agent action notification (broadcast when agent does something)
+    AgentAction {
+        agent_name: String,
+        action_type: String,
+        details: serde_json::Value,
+        timestamp: i64,
+    },
+
+    /// Agent system status
+    AgentStatus { status: serde_json::Value },
+
+    /// Agent activity logs
+    AgentLogs { logs: Vec<serde_json::Value> },
+
+    /// Available Ollama models
+    OllamaModels { models: Vec<serde_json::Value> },
+
+    /// Current model info
+    CurrentModel { model: serde_json::Value },
+
+    /// Active board meetings
+    ActiveMeetings { meetings: Vec<serde_json::Value> },
+
+    /// Meeting transcript
+    MeetingTranscript {
+        company: String,
+        transcript: Vec<serde_json::Value>,
+    },
+
+    /// Scenario history
+    ScenarioHistory { scenarios: Vec<serde_json::Value> },
 }
 
 impl ServerMessage {
@@ -429,6 +478,17 @@ impl ServerMessage {
             ServerMessage::AdminOpenOrders { .. } => "AdminOpenOrders",
             ServerMessage::AdminDashboardMetrics { .. } => "AdminDashboardMetrics",
             ServerMessage::AdminOrderbook { .. } => "AdminOrderbook",
+            ServerMessage::AgentList { .. } => "AgentList",
+            ServerMessage::AgentChatResponse { .. } => "AgentChatResponse",
+            ServerMessage::AgentProfile { .. } => "AgentProfile",
+            ServerMessage::AgentAction { .. } => "AgentAction",
+            ServerMessage::AgentStatus { .. } => "AgentStatus",
+            ServerMessage::AgentLogs { .. } => "AgentLogs",
+            ServerMessage::OllamaModels { .. } => "OllamaModels",
+            ServerMessage::CurrentModel { .. } => "CurrentModel",
+            ServerMessage::ActiveMeetings { .. } => "ActiveMeetings",
+            ServerMessage::MeetingTranscript { .. } => "MeetingTranscript",
+            ServerMessage::ScenarioHistory { .. } => "ScenarioHistory",
         }
     }
 

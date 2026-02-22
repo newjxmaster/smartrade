@@ -813,6 +813,9 @@ async fn test_admin_create_company() {
             "New Company Inc".to_string(),
             "Technology".to_string(),
             25,
+            None,
+            None,
+            None,
         )
         .await
         .unwrap();
@@ -841,6 +844,9 @@ async fn test_admin_create_duplicate_company() {
             "Another Company".to_string(),
             "Finance".to_string(),
             10,
+            None,
+            None,
+            None,
         )
         .await;
 

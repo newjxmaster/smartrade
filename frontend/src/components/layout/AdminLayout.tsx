@@ -16,7 +16,8 @@ import {
     RefreshCw,
     ArrowRightLeft,
     BookOpen,
-    BarChart3
+    BarChart3,
+    Bot
 } from 'lucide-react';
 import { Header } from './Header';
 import { ToastContainer } from '../../components/common';
@@ -33,6 +34,7 @@ interface NavItem {
 const navItems: NavItem[] = [
     { path: '/admin', label: 'Dashboard', icon: <LayoutDashboard size={20} /> },
     { path: '/admin/game', label: 'Game Control', icon: <Gamepad2 size={20} /> },
+    { path: '/admin/agents', label: 'AI Agents', icon: <Bot size={20} /> },
     { path: '/admin/traders', label: 'Traders', icon: <Users size={20} /> },
     { path: '/admin/companies', label: 'Companies', icon: <Building2 size={20} /> },
     { path: '/admin/trades', label: 'Trade History', icon: <ArrowRightLeft size={20} /> },

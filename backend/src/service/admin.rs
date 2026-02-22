@@ -8,12 +8,14 @@ use crate::domain::models::{
 use crate::domain::{CompanyRepository, UserRepository};
 use crate::infrastructure::id_generator::IdGenerators;
 use crate::service::engine::MatchingEngine;
+use crate::service::market::MarketService;
 use rand::Rng;
 use std::sync::Arc;
 use tracing::{debug, info, warn};
 
 pub struct AdminService {
     engine: Arc<MatchingEngine>,
+    market: Arc<MarketService>,
     company_repo: Arc<dyn CompanyRepository>,
     user_repo: Arc<dyn UserRepository>,
 }
@@ -21,11 +23,13 @@ pub struct AdminService {
 impl AdminService {
     pub fn new(
         engine: Arc<MatchingEngine>,
+        market: Arc<MarketService>,
         company_repo: Arc<dyn CompanyRepository>,
         user_repo: Arc<dyn UserRepository>,
     ) -> Self {
         Self {
             engine,
+            market,
             company_repo,
             user_repo,
         }
@@ -127,6 +131,9 @@ impl AdminService {
         
         // Seed initial liquidity (bid/ask orders) so users can trade immediately
         self.seed_initial_liquidity(&symbol, base_price).await;
+        
+        // Seed initial candle so the chart doesn't appear empty
+        self.market.seed_initial_candle(&symbol, base_price);
         
         info!("Created company {} with initial liquidity at price {}. Market is open: {}", 
               symbol, base_price, self.engine.is_market_open());

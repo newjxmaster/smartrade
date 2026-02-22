@@ -705,6 +705,9 @@ async fn test_admin_service_company_ops() {
             "High Volatility Co".to_string(),
             "Finance".to_string(),
             75,
+            None,
+            None,
+            None,
         )
         .await
         .unwrap();

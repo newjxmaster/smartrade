@@ -496,6 +496,9 @@ async fn test_create_duplicate_company() {
             "Duplicate Test".to_string(),
             "Test".to_string(),
             10,
+            None,
+            None,
+            None,
         )
         .await
         .unwrap();
@@ -508,6 +511,9 @@ async fn test_create_duplicate_company() {
             "Duplicate Test 2".to_string(),
             "Test".to_string(),
             10,
+            None,
+            None,
+            None,
         )
         .await;
 

@@ -16,6 +16,7 @@ import { StockDetailPage } from './features/trader/StockDetailPage';
 import { UserSettingsPage } from './features/trader/UserSettingsPage';
 import { AdminDashboardPage } from './features/admin/DashboardPage';
 import { GameControlPage } from './features/admin/GameControlPage';
+import { AgentsPage } from './features/admin/AgentsPage';
 import { TradersPage } from './features/admin/TradersPage';
 import { CompaniesPage } from './features/admin/CompaniesPage';
 import { DiagnosticsPage } from './features/admin/DiagnosticsPage';
@@ -82,6 +83,7 @@ const App: React.FC = () => {
           >
             <Route index element={<AdminDashboardPage />} />
             <Route path="game" element={<GameControlPage />} />
+            <Route path="agents" element={<AgentsPage />} />
             <Route path="traders" element={<TradersPage />} />
             <Route path="companies" element={<CompaniesPage />} />
             <Route path="trades" element={<TradesPage />} />

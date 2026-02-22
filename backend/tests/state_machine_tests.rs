@@ -912,6 +912,9 @@ async fn test_invariant_symbol_uniqueness() {
             "Duplicate Co.".to_string(),
             "Tech".to_string(),
             100,
+            None,
+            None,
+            None,
         )
         .await;
 

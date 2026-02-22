@@ -2,6 +2,7 @@
 //!
 //! This library exposes all modules for integration testing.
 
+pub mod agent;
 pub mod api;
 pub mod config;
 pub mod domain;

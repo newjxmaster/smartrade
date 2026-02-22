@@ -391,7 +391,7 @@ async fn test_very_long_symbol() {
     let state = create_test_state().await;
 
     // Try to create company with very long symbol
-    // create_company takes (symbol, name, sector, volatility)
+    // create_company takes (symbol, name, sector, volatility, total_shares, initial_price, price_precision)
     let long_symbol = "A".repeat(1000);
     let result = state
         .admin
@@ -400,6 +400,9 @@ async fn test_very_long_symbol() {
             "Long Symbol Corp".to_string(),
             "Tech".to_string(),
             100, // volatility
+            None,
+            None,
+            None,
         )
         .await;
 
@@ -427,7 +430,7 @@ async fn test_empty_strings_handled() {
     let _ = state.user_repo.save(empty_user).await;
 
     // Try to create company with empty symbol
-    // create_company takes (symbol, name, sector, volatility)
+    // create_company takes (symbol, name, sector, volatility, total_shares, initial_price, price_precision)
     let result2 = state
         .admin
         .create_company(
@@ -435,6 +438,9 @@ async fn test_empty_strings_handled() {
             "Empty Symbol Corp".to_string(),
             "Tech".to_string(),
             100, // volatility
+            None,
+            None,
+            None,
         )
         .await;
     // Should fail or handle gracefully

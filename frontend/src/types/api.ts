@@ -81,6 +81,14 @@ export interface ClientAdminAction {
     };
 }
 
+export interface ClientAgentAction {
+    type: 'AgentAction';
+    payload: {
+        action: string;
+        payload: Record<string, unknown>;
+    };
+}
+
 export interface ClientChat {
     type: 'Chat';
     payload: {
@@ -131,6 +139,7 @@ export type ClientMessage =
     | ClientSubscribe
     | ClientGetDepth
     | ClientAdminAction
+    | ClientAgentAction
     | ClientChat
     | ClientGetPortfolio
     | ClientPing
@@ -919,6 +928,82 @@ export interface ServerChatSync {
     };
 }
 
+// Agent-related server messages
+export interface ServerAgentStatus {
+    type: 'AgentStatus';
+    payload: {
+        status: Record<string, unknown>;
+    };
+}
+
+export interface ServerAgentList {
+    type: 'AgentList';
+    payload: {
+        agents: Record<string, unknown>[];
+    };
+}
+
+export interface ServerAgentChatResponse {
+    type: 'AgentChatResponse';
+    payload: {
+        agent_id: number;
+        response: string;
+    };
+}
+
+export interface ServerAgentProfile {
+    type: 'AgentProfile';
+    payload: {
+        id: number;
+        name: string;
+        agent_type: string;
+        recent_thoughts: string[];
+    };
+}
+
+export interface ServerAgentLogs {
+    type: 'AgentLogs';
+    payload: {
+        logs: Record<string, unknown>[];
+    };
+}
+
+export interface ServerOllamaModels {
+    type: 'OllamaModels';
+    payload: {
+        models: Record<string, unknown>[];
+    };
+}
+
+export interface ServerCurrentModel {
+    type: 'CurrentModel';
+    payload: {
+        model: Record<string, unknown>;
+    };
+}
+
+export interface ServerActiveMeetings {
+    type: 'ActiveMeetings';
+    payload: {
+        meetings: Record<string, unknown>[];
+    };
+}
+
+export interface ServerMeetingTranscript {
+    type: 'MeetingTranscript';
+    payload: {
+        company: string;
+        transcript: Record<string, unknown>[];
+    };
+}
+
+export interface ServerScenarioHistory {
+    type: 'ScenarioHistory';
+    payload: {
+        scenarios: Record<string, unknown>[];
+    };
+}
+
 export type ServerMessage =
     | ServerAuthSuccess
     | ServerAuthFailed
@@ -963,7 +1048,18 @@ export type ServerMessage =
     | ServerOrderbookSync
     | ServerCandlesSync
     | ServerNewsSync
-    | ServerChatSync;
+    | ServerChatSync
+    // Agent messages
+    | ServerAgentStatus
+    | ServerAgentList
+    | ServerAgentChatResponse
+    | ServerAgentProfile
+    | ServerAgentLogs
+    | ServerOllamaModels
+    | ServerCurrentModel
+    | ServerActiveMeetings
+    | ServerMeetingTranscript
+    | ServerScenarioHistory;
 
 // === Message Type Extractors ===
 export type ServerMessageType = ServerMessage['type'];

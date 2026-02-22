@@ -4,6 +4,7 @@
 //! Each handler is responsible for processing a specific category of messages.
 
 pub mod admin;
+pub mod agents;
 pub mod auth;
 pub mod chat;
 pub mod market;
@@ -12,6 +13,7 @@ pub mod trading;
 
 // Re-export commonly used items
 pub use admin::handle_admin_action;
+pub use agents::handle_agent_action;
 pub use auth::{handle_auth, handle_login, handle_register};
 pub use chat::handle_chat;
 pub use market::{

@@ -125,6 +125,20 @@ pub enum ClientMessage {
         payload: serde_json::Value,
     },
 
+    /// AI Agent actions (requires admin privileges)
+    ///
+    /// Supported actions:
+    /// - "list_agents" - no payload
+    /// - "chat_with_agent" - payload: { agent_id: u64, message: string }
+    /// - "get_agent_profile" - payload: { agent_id: u64 }
+    /// - "spawn_traders" - payload: { count: u64 }
+    /// - "start_meeting" - payload: { company: string, agenda?: string }
+    /// - "deploy_scenario" - payload: { type: string, target?: string, severity?: f64 }
+    AgentAction {
+        action: String,
+        payload: serde_json::Value,
+    },
+
     // =========================================================================
     // SYSTEM
     // =========================================================================
@@ -150,6 +164,7 @@ impl ClientMessage {
             ClientMessage::GetConfig { .. } => "GetConfig",
             ClientMessage::Chat { .. } => "Chat",
             ClientMessage::AdminAction { .. } => "AdminAction",
+            ClientMessage::AgentAction { .. } => "AgentAction",
             ClientMessage::Ping { .. } => "Ping",
         }
     }
@@ -170,7 +185,7 @@ impl ClientMessage {
 
     /// Check if this is an admin-only action
     pub fn is_admin_action(&self) -> bool {
-        matches!(self, ClientMessage::AdminAction { .. })
+        matches!(self, ClientMessage::AdminAction { .. } | ClientMessage::AgentAction { .. })
     }
 }
 

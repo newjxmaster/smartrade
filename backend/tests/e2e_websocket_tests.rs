@@ -146,6 +146,7 @@ impl TestServer {
         ));
         let admin_service = Arc::new(AdminService::new(
             engine.clone(),
+            market_service.clone(),
             company_repo.clone(),
             user_repo.clone(),
         ));

@@ -174,11 +174,63 @@ impl MarketService {
             .collect()
     }
 
+    /// Seed an initial candle for a new company.
+    /// This creates a synthetic candle at the initial price so the chart doesn't appear empty.
+    pub fn seed_initial_candle(&self, symbol: &str, price: i64) {
+        // Round down to nearest minute
+        let now = Utc::now();
+        let candle_time = now
+            .with_second(0)
+            .unwrap()
+            .with_nanosecond(0)
+            .unwrap()
+            .timestamp();
+
+        let mut candles = self.candles.entry(symbol.to_string()).or_insert_with(Vec::new);
+
+        // Only seed if no candles exist yet
+        if candles.is_empty() {
+            let candle = Candle::new(symbol.to_string(), "1m".to_string(), price, candle_time);
+            candles.push(candle);
+            tracing::info!("Seeded initial candle for {} at price {}", symbol, price);
+        }
+
+        // Also initialize circuit breaker reference price
+        if !self.circuit_breakers.contains_key(symbol) {
+            self.circuit_breakers.insert(symbol.to_string(), (0, price));
+        }
+    }
+
+    /// Get market snapshot for all symbols
+    pub fn get_snapshot(&self) -> MarketSnapshot {
+        let prices: std::collections::HashMap<String, i64> = self
+            .candles
+            .iter()
+            .filter_map(|entry| {
+                entry.value().last().map(|candle| {
+                    (entry.key().clone(), candle.close)
+                })
+            })
+            .collect();
+        
+        // Calculate volatility (mock for now)
+        let volatility = Some(0.15); // 15% default volatility
+        
+        MarketSnapshot { prices, volatility }
+    }
+
     /// Process a single trade - exposed for testing
     #[cfg(test)]
     pub fn test_process_trade(&self, trade: Trade) {
         self.process_trade(trade);
     }
+}
+
+/// Snapshot of current market state for agents
+#[derive(Debug, Clone, Default)]
+pub struct MarketSnapshot {
+    pub prices: std::collections::HashMap<String, i64>,
+    pub volatility: Option<f64>,
 }
 
 #[cfg(test)]

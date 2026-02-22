@@ -3298,3 +3298,5 @@
 {"seq":44,"timestamp":"2026-02-22T00:16:05.095635Z","timestamp_unix":1771719365,"event_type":"UserLogin","user_id":1,"regno":"admin","name":"Administrator"}
 {"seq":45,"timestamp":"2026-02-22T00:20:56.890208Z","timestamp_unix":1771719656,"event_type":"UserLogin","user_id":2,"regno":"trader1","name":"Trader One"}
 {"seq":46,"timestamp":"2026-02-22T00:22:33.125563Z","timestamp_unix":1771719753,"event_type":"UserLogin","user_id":4,"regno":"napole","name":"napole"}
+{"seq":1,"timestamp":"2026-02-22T19:46:41.672884Z","timestamp_unix":1771789601,"event_type":"UserLogin","user_id":2,"regno":"trader1","name":"Trader One"}
+{"seq":2,"timestamp":"2026-02-22T19:47:09.793384Z","timestamp_unix":1771789629,"event_type":"UserLogin","user_id":1,"regno":"admin","name":"Administrator"}

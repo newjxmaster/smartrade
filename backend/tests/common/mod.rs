@@ -110,6 +110,7 @@ pub async fn create_test_state_with_config(config: TestConfig) -> Arc<AppState> 
     // Initialize Admin Service
     let admin_service = Arc::new(AdminService::new(
         engine.clone(),
+        market_service.clone(),
         company_repo.clone(),
         user_repo.clone(),
     ));

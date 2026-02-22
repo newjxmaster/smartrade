@@ -4,6 +4,7 @@
 
 use std::sync::Arc;
 
+use crate::agent::SimulationRuntime;
 use crate::config::ConfigService;
 use crate::domain::{CompanyRepository, UserRepository};
 use crate::service::admin::AdminService;
@@ -56,4 +57,6 @@ pub struct AppState {
     pub tokens: Arc<TokenService>,
     /// Server start time (Unix timestamp)
     pub server_start_time: i64,
+    /// AI Agent simulation runtime (optional)
+    pub agent_runtime: Option<Arc<SimulationRuntime>>,
 }
