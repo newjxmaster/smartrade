@@ -13,7 +13,7 @@ use crate::domain::error::UserError;
 use crate::domain::models::{OrderSide, PRICE_SCALE};
 use crate::domain::ui_models::AdminDashboardMetrics;
 use crate::domain::user::AdminAction;
-use crate::presentation::websocket::messages::ServerMessage;
+use crate::presentation::websocket::messages::{CompanyInfo, ServerMessage};
 
 use super::helpers::calculate_net_worth;
 use super::send_message;
@@ -173,6 +173,18 @@ async fn handle_create_company(
         payload.get("sector").and_then(|v| v.as_str()),
         payload.get("volatility").and_then(|v| v.as_i64()),
     ) {
+        // Optional fields with defaults
+        let total_shares = payload
+            .get("total_shares")
+            .and_then(|v| v.as_i64());
+        let initial_price = payload
+            .get("initial_price")
+            .and_then(|v| v.as_i64());
+        let price_precision = payload
+            .get("price_precision")
+            .and_then(|v| v.as_u64())
+            .map(|v| v as u8);
+
         match state
             .admin
             .create_company(
@@ -180,19 +192,39 @@ async fn handle_create_company(
                 name.to_string(),
                 sector.to_string(),
                 vol,
+                total_shares,
+                initial_price,
+                price_precision,
             )
             .await
         {
             Ok(_) => {
-                let initial_price = 100 * PRICE_SCALE;
+                let price = initial_price.unwrap_or(100 * PRICE_SCALE);
                 state
                     .event_log
-                    .log_company_created(symbol, name, sector, initial_price);
+                    .log_company_created(symbol, name, sector, price);
 
-                let msg = ServerMessage::System {
-                    message: format!("Company {} ({}) created", symbol, name),
+                // Broadcast updated company list to all clients
+                let companies = match state.company_repo.all().await {
+                    Ok(companies) => companies
+                        .iter()
+                        .map(|c| CompanyInfo {
+                            id: c.id,
+                            symbol: c.symbol.clone(),
+                            name: c.name.clone(),
+                            sector: c.sector.clone(),
+                            volatility: c.volatility,
+                        })
+                        .collect(),
+                    Err(_) => vec![],
                 };
+                let msg = ServerMessage::CompanyList { companies };
                 send_message(sender, &msg).await;
+
+                let sys_msg = ServerMessage::System {
+                    message: format!("Company {} ({}) created with initial liquidity", symbol, name),
+                };
+                send_message(sender, &sys_msg).await;
             }
             Err(e) => {
                 let msg = ServerMessage::error("ADMIN_ERROR", &e);

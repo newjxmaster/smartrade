@@ -53,7 +53,7 @@ pub mod currency {
         pub fn symbol(&self) -> &'static str {
             match self {
                 Currency::USD => "$",
-                Currency::XOF => "CFA",
+                Currency::XOF => "F.CFA",
                 Currency::EUR => "€",
             }
         }

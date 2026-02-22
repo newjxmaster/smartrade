@@ -81,6 +81,9 @@ impl AdminService {
         name: String,
         sector: String,
         volatility: i64,
+        total_shares: Option<i64>,
+        initial_price: Option<i64>,
+        price_precision: Option<u8>,
     ) -> Result<(), String> {
         // Check if symbol already exists
         if self
@@ -92,14 +95,19 @@ impl AdminService {
             return Err(format!("Symbol {} already exists", symbol));
         }
 
+        // Use defaults if not provided
+        let total_shares = total_shares.unwrap_or(1_000_000);
+        let price_precision = price_precision.unwrap_or(2);
+        let base_price = initial_price.unwrap_or(100 * PRICE_SCALE);
+
         let company = crate::domain::models::Company {
             id: IdGenerators::global().next_company_id(),
             symbol: symbol.clone(),
             name,
             sector,
-            total_shares: 1_000_000, // Default IPO shares
+            total_shares: total_shares as u64,
             bankrupt: false,
-            price_precision: 2,
+            price_precision,
             volatility,
         };
 
@@ -107,8 +115,71 @@ impl AdminService {
             .create(company)
             .await
             .map_err(|e| e.to_string())?;
-        self.engine.create_orderbook(symbol);
+        
+        // Create orderbook for the new company
+        self.engine.create_orderbook(symbol.clone());
+        
+        // Ensure market is open so users can trade immediately
+        if !self.engine.is_market_open() {
+            info!("Opening market for new company {}", symbol);
+            self.engine.set_market_open(true);
+        }
+        
+        // Seed initial liquidity (bid/ask orders) so users can trade immediately
+        self.seed_initial_liquidity(&symbol, base_price).await;
+        
+        info!("Created company {} with initial liquidity at price {}. Market is open: {}", 
+              symbol, base_price, self.engine.is_market_open());
         Ok(())
+    }
+
+    /// Seed initial bid/ask orders for a new company
+    async fn seed_initial_liquidity(&self, symbol: &str, base_price: i64) {
+        let mut rng = rand::thread_rng();
+        
+        // Create 5 bid levels (buy orders) below market price
+        for i in 1..=5 {
+            let price = base_price - (i as i64 * 50 * 100); // $0.50 decrements
+            let qty = rng.gen_range(50..200); // Random qty 50-200
+
+            let order = Order {
+                id: IdGenerators::global().next_order_id(),
+                user_id: 1, // Admin places these orders
+                symbol: symbol.to_string(),
+                order_type: OrderType::Limit,
+                side: OrderSide::Buy,
+                qty,
+                filled_qty: 0,
+                price,
+                status: OrderStatus::Open,
+                timestamp: chrono::Utc::now().timestamp(),
+                time_in_force: TimeInForce::GTC,
+            };
+            self.engine.seed_order(order);
+        }
+
+        // Create 5 ask levels (sell orders) above market price
+        for i in 1..=5 {
+            let price = base_price + (i as i64 * 50 * 100); // $0.50 increments
+            let qty = rng.gen_range(50..200); // Random qty 50-200
+
+            let order = Order {
+                id: IdGenerators::global().next_order_id(),
+                user_id: 1, // Admin places these orders
+                symbol: symbol.to_string(),
+                order_type: OrderType::Limit,
+                side: OrderSide::Sell,
+                qty,
+                filled_qty: 0,
+                price,
+                status: OrderStatus::Open,
+                timestamp: chrono::Utc::now().timestamp(),
+                time_in_force: TimeInForce::GTC,
+            };
+            self.engine.seed_order(order);
+        }
+        
+        debug!("Seeded initial liquidity for {} at price {}", symbol, base_price);
     }
 
     /// Initialize or reset the game

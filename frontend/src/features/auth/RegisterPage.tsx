@@ -258,7 +258,7 @@ export const RegisterPage: React.FC = () => {
                         border: '1px solid rgba(99, 102, 241, 0.2)',
                     }}>
                         <p className="text-sm" style={{ color: 'var(--text-secondary)', margin: 0 }}>
-                            <strong>💰 Starting Balance:</strong> You'll receive $100,000 in virtual cash to start trading!
+                            <strong>💰 Starting Balance:</strong> You'll receive 100,000 F.CFA in virtual cash to start trading!
                         </p>
                     </div>
 

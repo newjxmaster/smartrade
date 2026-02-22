@@ -81,7 +81,7 @@ const defaultFrontendConstants: FrontendConstants = {
             register_button: 'Create Account',
             no_account_text: "Don't have an account?",
             has_account_text: 'Already have an account?',
-            starting_balance_info: "You'll receive $100,000 in virtual cash to start trading!",
+            starting_balance_info: "You'll receive 100,000 F.CFA in virtual cash to start trading!",
         },
         trading: {
             order_book: 'Order Book',
@@ -162,13 +162,13 @@ const defaultFrontendConstants: FrontendConstants = {
     },
 };
 
-// Default currency config (USD)
+// Default currency config (F.CFA - West African CFA franc)
 const defaultCurrency: CurrencyConfig = {
-    symbol: '$',
-    code: 'USD',
-    locale: 'en-US',
-    decimals: 2,
-    symbol_position: 'before',
+    symbol: 'F.CFA',
+    code: 'XOF',
+    locale: 'fr-FR',
+    decimals: 0,
+    symbol_position: 'after',
 };
 
 interface ConfigState {
@@ -258,19 +258,15 @@ export const useConfigStore = create<ConfigState>((set, get) => ({
 
     formatCurrency: (value: number) => {
         const state = get();
-        const { currency, _formatter } = state;
+        const { currency } = state;
 
-        let formatted: string;
-        if (_formatter) {
-            formatted = _formatter.format(value);
-        } else {
-            formatted = value.toFixed(currency.decimals);
-        }
+        // Format with thousands separator, no decimals
+        const formatted = Math.floor(value).toLocaleString('en-US');
 
         if (currency.symbol_position === 'before') {
             return `${currency.symbol}${formatted}`;
         } else {
-            return `${formatted}${currency.symbol}`;
+            return `${formatted} ${currency.symbol}`;
         }
     },
 

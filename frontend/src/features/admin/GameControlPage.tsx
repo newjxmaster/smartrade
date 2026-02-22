@@ -192,8 +192,8 @@ const GameLifecycleSection: React.FC = () => {
                             background: 'var(--bg-tertiary)'
                         }}>
                             <div className="text-sm">
-                                <strong>Preview:</strong> Each trader gets ~${parseInt(targetNetworth)/2} cash +
-                                shares worth ~${parseInt(targetNetworth)/2} ({companies.length} companies × ~{sharesPerTrader} shares @ $100/share)
+                                <strong>Preview:</strong> Each trader gets ~{Math.floor(parseInt(targetNetworth)/2).toLocaleString('en-US')} F.CFA cash +
+                                shares worth ~{Math.floor(parseInt(targetNetworth)/2).toLocaleString('en-US')} F.CFA ({companies.length} companies × ~{sharesPerTrader} shares @ 100 F.CFA/share)
                             </div>
                         </div>
 
@@ -452,7 +452,7 @@ const QuickStatsSection: React.FC = () => {
                             Volume
                         </div>
                         <div className="stat-value text-sm">
-                            ${totalVolume.toLocaleString()}
+                            {Math.floor(totalVolume).toLocaleString('en-US')} F.CFA
                         </div>
                     </div>
                     <div className="stat-card">

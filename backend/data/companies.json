@@ -1,43 +1,23 @@
 [
   {
-    "id": 1,
-    "symbol": "RELIANCE",
-    "name": "Reliance Industries Ltd.",
-    "sector": "Energy",
-    "total_shares": 5000000,
-    "bankrupt": false,
-    "price_precision": 2,
-    "volatility": 15
-  },
-  {
-    "id": 6,
-    "symbol": "TATAMOTORS",
-    "name": "Tata Motors Ltd.",
-    "sector": "Auto",
-    "total_shares": 1500000,
-    "bankrupt": false,
-    "price_precision": 2,
-    "volatility": 35
-  },
-  {
-    "id": 4,
-    "symbol": "INFY",
-    "name": "Infosys Ltd.",
+    "id": 9,
+    "symbol": "ZOMATO",
+    "name": "Zomato Ltd.",
     "sector": "Tech",
-    "total_shares": 3000000,
+    "total_shares": 500000,
     "bankrupt": false,
     "price_precision": 2,
-    "volatility": 14
+    "volatility": 50
   },
   {
-    "id": 8,
-    "symbol": "ADANIENT",
-    "name": "Adani Enterprises Ltd.",
-    "sector": "Conglomerate",
-    "total_shares": 800000,
+    "id": 12,
+    "symbol": "KWM",
+    "name": "KWASM",
+    "sector": "Tech",
+    "total_shares": 1000000,
     "bankrupt": false,
     "price_precision": 2,
-    "volatility": 45
+    "volatility": 25
   },
   {
     "id": 10,
@@ -60,14 +40,44 @@
     "volatility": 12
   },
   {
-    "id": 9,
-    "symbol": "ZOMATO",
-    "name": "Zomato Ltd.",
-    "sector": "Tech",
-    "total_shares": 500000,
+    "id": 6,
+    "symbol": "TATAMOTORS",
+    "name": "Tata Motors Ltd.",
+    "sector": "Auto",
+    "total_shares": 1500000,
     "bankrupt": false,
     "price_precision": 2,
-    "volatility": 50
+    "volatility": 35
+  },
+  {
+    "id": 1,
+    "symbol": "RELIANCE",
+    "name": "Reliance Industries Ltd.",
+    "sector": "Energy",
+    "total_shares": 5000000,
+    "bankrupt": false,
+    "price_precision": 2,
+    "volatility": 15
+  },
+  {
+    "id": 5,
+    "symbol": "ICICIBANK",
+    "name": "ICICI Bank Ltd.",
+    "sector": "Finance",
+    "total_shares": 2500000,
+    "bankrupt": false,
+    "price_precision": 2,
+    "volatility": 20
+  },
+  {
+    "id": 11,
+    "symbol": "RYC",
+    "name": "Ride Your Cities",
+    "sector": "Tech",
+    "total_shares": 1000000,
+    "bankrupt": false,
+    "price_precision": 2,
+    "volatility": 25
   },
   {
     "id": 3,
@@ -80,14 +90,24 @@
     "volatility": 18
   },
   {
-    "id": 5,
-    "symbol": "ICICIBANK",
-    "name": "ICICI Bank Ltd.",
-    "sector": "Finance",
-    "total_shares": 2500000,
+    "id": 4,
+    "symbol": "INFY",
+    "name": "Infosys Ltd.",
+    "sector": "Tech",
+    "total_shares": 3000000,
     "bankrupt": false,
     "price_precision": 2,
-    "volatility": 20
+    "volatility": 14
+  },
+  {
+    "id": 8,
+    "symbol": "ADANIENT",
+    "name": "Adani Enterprises Ltd.",
+    "sector": "Conglomerate",
+    "total_shares": 800000,
+    "bankrupt": false,
+    "price_precision": 2,
+    "volatility": 45
   },
   {
     "id": 7,

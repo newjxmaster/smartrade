@@ -11,6 +11,7 @@ export { ToastContainer } from './Toast';
 export { useToast } from './useToast';
 export { Badge } from './Badge';
 export { Tabs } from './Tabs';
+export { LoginModal } from './LoginModal';
 export { ErrorBoundary, WidgetErrorBoundary } from './ErrorBoundary';
 export {
     Skeleton,

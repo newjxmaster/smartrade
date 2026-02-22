@@ -53,23 +53,23 @@ pub struct CurrencyConfig {
 }
 
 fn default_currency_symbol() -> String {
-    "$".to_string()
+    "F.CFA".to_string()
 }
 
 fn default_currency_code() -> String {
-    "USD".to_string()
+    "XOF".to_string()
 }
 
 fn default_locale() -> String {
-    "en-US".to_string()
+    "fr-FR".to_string()
 }
 
 fn default_decimals() -> u8 {
-    2
+    0
 }
 
 fn default_symbol_position() -> String {
-    "before".to_string()
+    "after".to_string()
 }
 
 impl Default for CurrencyConfig {
@@ -592,7 +592,7 @@ impl Default for FrontendLabels {
                 register_button: "Create Account".to_string(),
                 no_account_text: "Don't have an account?".to_string(),
                 has_account_text: "Already have an account?".to_string(),
-                starting_balance_info: "You'll receive $100,000 in virtual cash to start trading!"
+                starting_balance_info: "You'll receive 100,000 F.CFA in virtual cash to start trading!"
                     .to_string(),
             },
             trading: TradingLabels {

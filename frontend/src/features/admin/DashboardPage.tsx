@@ -266,7 +266,7 @@ export const AdminDashboardPage: React.FC = () => {
                                             </span>
                                         </div>
                                         <div className="trade-price">
-                                            ${trade.price.toFixed(2)}
+                                            {Math.floor(trade.price).toLocaleString('en-US')} F.CFA
                                         </div>
                                     </div>
                                 ))}

@@ -301,14 +301,31 @@ impl MatchingEngine {
 
     /// Place a new order with full validation
     pub async fn place_order(&self, mut order: Order) -> Result<Order, EngineError> {
+        tracing::info!(
+            "Placing order: user_id={}, symbol={}, side={:?}, type={:?}, qty={}, price={}",
+            order.user_id, order.symbol, order.side, order.order_type, order.qty, order.price
+        );
+        
         // Check market status
         if !self.is_market_open() {
+            tracing::warn!("Order rejected: market is closed");
             return Err(EngineError::MarketClosed);
         }
 
         // Verify symbol exists
         if !self.orderbooks.contains_key(&order.symbol) {
+            tracing::warn!("Order rejected: symbol {} not found", order.symbol);
             return Err(EngineError::SymbolNotFound);
+        }
+        
+        // Log orderbook state before matching
+        if let Some(ob) = self.orderbooks.get(&order.symbol) {
+            let best_bid = ob.best_bid();
+            let best_ask = ob.best_ask();
+            tracing::info!(
+                "Orderbook state for {}: best_bid={:?}, best_ask={:?}",
+                order.symbol, best_bid, best_ask
+            );
         }
 
         // Fetch user
@@ -384,6 +401,11 @@ impl MatchingEngine {
 
         let (mut processed_order, trades) = orderbook.add_order(order, time_in_force);
         drop(orderbook); // Release lock before async operations
+        
+        tracing::info!(
+            "Order matching result: order_id={}, status={:?}, trades_executed={}",
+            processed_order.id, processed_order.status, trades.len()
+        );
 
         // Handle trades (settlement)
         for trade in &trades {

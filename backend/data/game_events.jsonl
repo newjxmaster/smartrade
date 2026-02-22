@@ -3246,3 +3246,55 @@
 {"seq":1,"timestamp":"2026-02-21T17:54:40.535985Z","timestamp_unix":1771696480,"event_type":"UserLogin","user_id":2,"regno":"trader1","name":"Trader One"}
 {"seq":2,"timestamp":"2026-02-21T17:55:14.031841Z","timestamp_unix":1771696514,"event_type":"UserLogin","user_id":3,"regno":"trader2","name":"Trader Two"}
 {"seq":3,"timestamp":"2026-02-21T17:59:39.759988Z","timestamp_unix":1771696779,"event_type":"UserLogin","user_id":1,"regno":"admin","name":"Administrator"}
+{"seq":1,"timestamp":"2026-02-21T20:45:41.179825Z","timestamp_unix":1771706741,"event_type":"UserLogin","user_id":1,"regno":"admin","name":"Administrator"}
+{"seq":2,"timestamp":"2026-02-21T20:47:14.469891Z","timestamp_unix":1771706834,"event_type":"UserLogin","user_id":1,"regno":"admin","name":"Administrator"}
+{"seq":1,"timestamp":"2026-02-21T20:55:41.991364Z","timestamp_unix":1771707341,"event_type":"UserLogin","user_id":1,"regno":"admin","name":"Administrator"}
+{"seq":2,"timestamp":"2026-02-21T20:56:53.434648Z","timestamp_unix":1771707413,"event_type":"UserLogin","user_id":1,"regno":"admin","name":"Administrator"}
+{"seq":3,"timestamp":"2026-02-21T20:58:02.322044Z","timestamp_unix":1771707482,"event_type":"UserLogin","user_id":2,"regno":"trader1","name":"Trader One"}
+{"seq":4,"timestamp":"2026-02-21T20:58:47.586597Z","timestamp_unix":1771707527,"event_type":"UserLogin","user_id":2,"regno":"trader1","name":"Trader One"}
+{"seq":1,"timestamp":"2026-02-21T21:11:24.516407Z","timestamp_unix":1771708284,"event_type":"UserRegistered","user_id":4,"regno":"napole","name":"napole","initial_cash":534000000,"initial_portfolio_value":466000000}
+{"seq":2,"timestamp":"2026-02-21T21:11:31.119247Z","timestamp_unix":1771708291,"event_type":"UserLogin","user_id":1,"regno":"admin","name":"Administrator"}
+{"seq":3,"timestamp":"2026-02-21T21:12:05.854455Z","timestamp_unix":1771708325,"event_type":"CompanyCreated","symbol":"RYC","name":"Ride Your Cities","sector":"Tech","initial_price":1000000}
+{"seq":4,"timestamp":"2026-02-21T21:13:08.980963Z","timestamp_unix":1771708388,"event_type":"UserLogin","user_id":4,"regno":"napole","name":"napole"}
+{"seq":5,"timestamp":"2026-02-21T21:13:27.019263Z","timestamp_unix":1771708407,"event_type":"OrderPlaced","order_id":1,"user_id":4,"symbol":"ZOMATO","side":"Sell","order_type":"Limit","qty":52,"price":1000000,"time_in_force":"GTC"}
+{"seq":6,"timestamp":"2026-02-21T21:13:46.746935Z","timestamp_unix":1771708426,"event_type":"UserLogin","user_id":4,"regno":"napole","name":"napole"}
+{"seq":7,"timestamp":"2026-02-21T21:14:01.013974Z","timestamp_unix":1771708441,"event_type":"UserLogin","user_id":2,"regno":"trader1","name":"Trader One"}
+{"seq":8,"timestamp":"2026-02-21T21:15:39.745727Z","timestamp_unix":1771708539,"event_type":"UserLogin","user_id":4,"regno":"napole","name":"napole"}
+{"seq":9,"timestamp":"2026-02-21T21:17:02.582380Z","timestamp_unix":1771708622,"event_type":"UserLogin","user_id":4,"regno":"napole","name":"napole"}
+{"seq":10,"timestamp":"2026-02-21T21:19:30.272303Z","timestamp_unix":1771708770,"event_type":"UserLogin","user_id":1,"regno":"admin","name":"Administrator"}
+{"seq":11,"timestamp":"2026-02-21T21:20:48.361536Z","timestamp_unix":1771708848,"event_type":"UserLogin","user_id":4,"regno":"napole","name":"napole"}
+{"seq":12,"timestamp":"2026-02-21T21:21:43.834066Z","timestamp_unix":1771708903,"event_type":"OrderPlaced","order_id":2,"user_id":4,"symbol":"RYC","side":"Buy","order_type":"Limit","qty":10,"price":2000000,"time_in_force":"GTC"}
+{"seq":13,"timestamp":"2026-02-21T21:22:17.526660Z","timestamp_unix":1771708937,"event_type":"UserLogin","user_id":4,"regno":"napole","name":"napole"}
+{"seq":14,"timestamp":"2026-02-21T21:22:53.721919Z","timestamp_unix":1771708973,"event_type":"UserLogin","user_id":4,"regno":"napole","name":"napole"}
+{"seq":15,"timestamp":"2026-02-21T21:23:54.909510Z","timestamp_unix":1771709034,"event_type":"OrderPlaced","order_id":3,"user_id":4,"symbol":"RYC","side":"Buy","order_type":"Limit","qty":10,"price":2000000,"time_in_force":"GTC"}
+{"seq":16,"timestamp":"2026-02-21T21:25:54.509540Z","timestamp_unix":1771709154,"event_type":"UserLogin","user_id":4,"regno":"napole","name":"napole"}
+{"seq":17,"timestamp":"2026-02-21T21:27:10.643996Z","timestamp_unix":1771709230,"event_type":"UserLogin","user_id":4,"regno":"napole","name":"napole"}
+{"seq":18,"timestamp":"2026-02-21T21:40:44.344754Z","timestamp_unix":1771710044,"event_type":"UserLogin","user_id":4,"regno":"napole","name":"napole"}
+{"seq":19,"timestamp":"2026-02-21T21:51:57.381489Z","timestamp_unix":1771710717,"event_type":"UserLogin","user_id":4,"regno":"napole","name":"napole"}
+{"seq":20,"timestamp":"2026-02-21T21:57:22.407921Z","timestamp_unix":1771711042,"event_type":"UserLogin","user_id":4,"regno":"napole","name":"napole"}
+{"seq":21,"timestamp":"2026-02-21T22:00:32.195768Z","timestamp_unix":1771711232,"event_type":"UserLogin","user_id":4,"regno":"napole","name":"napole"}
+{"seq":22,"timestamp":"2026-02-21T22:04:19.982618Z","timestamp_unix":1771711459,"event_type":"UserLogin","user_id":4,"regno":"napole","name":"napole"}
+{"seq":23,"timestamp":"2026-02-21T22:22:21.825968Z","timestamp_unix":1771712541,"event_type":"UserLogin","user_id":4,"regno":"napole","name":"napole"}
+{"seq":24,"timestamp":"2026-02-21T22:36:21.253391Z","timestamp_unix":1771713381,"event_type":"UserLogin","user_id":1,"regno":"admin","name":"Administrator"}
+{"seq":25,"timestamp":"2026-02-21T22:37:57.387778Z","timestamp_unix":1771713477,"event_type":"CompanyCreated","symbol":"KWM","name":"KWASM","sector":"Tech","initial_price":1000000}
+{"seq":26,"timestamp":"2026-02-21T22:38:18.913169Z","timestamp_unix":1771713498,"event_type":"UserLogin","user_id":1,"regno":"admin","name":"Administrator"}
+{"seq":27,"timestamp":"2026-02-21T22:47:35.153062Z","timestamp_unix":1771714055,"event_type":"UserLogin","user_id":1,"regno":"admin","name":"Administrator"}
+{"seq":28,"timestamp":"2026-02-21T22:48:01.834284Z","timestamp_unix":1771714081,"event_type":"UserLogin","user_id":4,"regno":"napole","name":"napole"}
+{"seq":29,"timestamp":"2026-02-21T22:58:09.062478Z","timestamp_unix":1771714689,"event_type":"UserLogin","user_id":4,"regno":"napole","name":"napole"}
+{"seq":30,"timestamp":"2026-02-21T22:58:21.194176Z","timestamp_unix":1771714701,"event_type":"UserLogin","user_id":4,"regno":"napole","name":"napole"}
+{"seq":31,"timestamp":"2026-02-21T23:04:02.083311Z","timestamp_unix":1771715042,"event_type":"UserLogin","user_id":1,"regno":"admin","name":"Administrator"}
+{"seq":32,"timestamp":"2026-02-21T23:04:11.625801Z","timestamp_unix":1771715051,"event_type":"UserLogin","user_id":1,"regno":"admin","name":"Administrator"}
+{"seq":33,"timestamp":"2026-02-21T23:11:19.250736Z","timestamp_unix":1771715479,"event_type":"OrderCancelled","order_id":3,"user_id":4,"symbol":"RYC","reason":"User requested"}
+{"seq":34,"timestamp":"2026-02-21T23:11:33.392287Z","timestamp_unix":1771715493,"event_type":"OrderPlaced","order_id":4,"user_id":4,"symbol":"RYC","side":"Buy","order_type":"Market","qty":5,"price":0,"time_in_force":"IOC"}
+{"seq":35,"timestamp":"2026-02-21T23:12:00.336087Z","timestamp_unix":1771715520,"event_type":"UserLogin","user_id":4,"regno":"napole","name":"napole"}
+{"seq":36,"timestamp":"2026-02-21T23:16:25.979502Z","timestamp_unix":1771715785,"event_type":"UserLogin","user_id":1,"regno":"admin","name":"Administrator"}
+{"seq":37,"timestamp":"2026-02-21T23:26:41.517852Z","timestamp_unix":1771716401,"event_type":"UserLogin","user_id":1,"regno":"admin","name":"Administrator"}
+{"seq":38,"timestamp":"2026-02-21T23:29:27.114705Z","timestamp_unix":1771716567,"event_type":"UserLogin","user_id":1,"regno":"admin","name":"Administrator"}
+{"seq":39,"timestamp":"2026-02-21T23:39:35.633496Z","timestamp_unix":1771717175,"event_type":"UserLogin","user_id":4,"regno":"napole","name":"napole"}
+{"seq":40,"timestamp":"2026-02-21T23:48:07.522177Z","timestamp_unix":1771717687,"event_type":"UserLogin","user_id":4,"regno":"napole","name":"napole"}
+{"seq":41,"timestamp":"2026-02-21T23:48:45.995180Z","timestamp_unix":1771717725,"event_type":"UserLogin","user_id":1,"regno":"admin","name":"Administrator"}
+{"seq":42,"timestamp":"2026-02-21T23:57:07.275380Z","timestamp_unix":1771718227,"event_type":"UserLogin","user_id":4,"regno":"napole","name":"napole"}
+{"seq":43,"timestamp":"2026-02-21T23:59:50.863342Z","timestamp_unix":1771718390,"event_type":"UserLogin","user_id":1,"regno":"admin","name":"Administrator"}
+{"seq":44,"timestamp":"2026-02-22T00:16:05.095635Z","timestamp_unix":1771719365,"event_type":"UserLogin","user_id":1,"regno":"admin","name":"Administrator"}
+{"seq":45,"timestamp":"2026-02-22T00:20:56.890208Z","timestamp_unix":1771719656,"event_type":"UserLogin","user_id":2,"regno":"trader1","name":"Trader One"}
+{"seq":46,"timestamp":"2026-02-22T00:22:33.125563Z","timestamp_unix":1771719753,"event_type":"UserLogin","user_id":4,"regno":"napole","name":"napole"}

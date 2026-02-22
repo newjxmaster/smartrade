@@ -61,6 +61,8 @@ interface Company {
     name: string;
     sector: string;
     volatility: number;
+    totalShares?: number;
+    bankrupt?: boolean;
 }
 
 interface GameState {
@@ -546,7 +548,7 @@ export const useGameStore = create<GameState>((set, get) => ({
             set({ pendingOrder: null });
             useUIStore.getState().showToast({
                 type: 'success',
-                message: `Order filled: ${pendingOrder?.qty || payload.filled_qty} ${pendingOrder?.symbol || ''} @ $${pendingOrder?.price?.toFixed(2) || ''}`
+                message: `Order filled: ${pendingOrder?.qty || payload.filled_qty} ${pendingOrder?.symbol || ''} @ ${Math.floor((pendingOrder?.price || 0)).toLocaleString('en-US')} F.CFA`
             });
             return;
         }
@@ -574,7 +576,7 @@ export const useGameStore = create<GameState>((set, get) => ({
 
             useUIStore.getState().showToast({
                 type: 'success',
-                message: `Order placed: ${pendingOrder.side} ${pendingOrder.qty} ${pendingOrder.symbol} @ $${pendingOrder.price.toFixed(2)}`
+                message: `Order placed: ${pendingOrder.side} ${pendingOrder.qty} ${pendingOrder.symbol} @ ${Math.floor(pendingOrder.price).toLocaleString('en-US')} F.CFA`
             });
         } else {
             set({ pendingOrder: null });

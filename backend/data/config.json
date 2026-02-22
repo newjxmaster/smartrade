@@ -7,33 +7,10 @@
     "chat_enabled": true,
     "max_sessions_per_user": 1,
     "currency": {
-        "symbol": "CFA",
+        "symbol": "F.CFA",
         "code": "XOF",
         "locale": "fr-FR",
         "decimals": 0,
         "symbol_position": "after"
-    },
-    "available_currencies": [
-        {
-            "symbol": "$",
-            "code": "USD",
-            "locale": "en-US",
-            "decimals": 2,
-            "symbol_position": "before"
-        },
-        {
-            "symbol": "CFA",
-            "code": "XOF",
-            "locale": "fr-FR",
-            "decimals": 0,
-            "symbol_position": "after"
-        },
-        {
-            "symbol": "€",
-            "code": "EUR",
-            "locale": "de-DE",
-            "decimals": 2,
-            "symbol_position": "after"
-        }
-    ]
+    }
 }

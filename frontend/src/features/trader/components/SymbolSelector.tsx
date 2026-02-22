@@ -5,10 +5,12 @@
 
 import React, { useState, useMemo } from 'react';
 import { ChevronDown } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { useGameStore } from '../../../store/gameStore';
 import { useConfigStore } from '../../../store/configStore';
 
 export const SymbolSelector: React.FC = () => {
+    const navigate = useNavigate();
     const { activeSymbol, setActiveSymbol, companies, orderBooks } = useGameStore();
     const formatCurrency = useConfigStore(state => state.formatCurrency);
     const [isOpen, setIsOpen] = useState(false);
@@ -85,6 +87,8 @@ export const SymbolSelector: React.FC = () => {
                                             setActiveSymbol(company.symbol);
                                             setIsOpen(false);
                                             setSearch('');
+                                            // Navigate to stock detail page
+                                            navigate(`/stock/${company.symbol}`);
                                         }}
                                     >
                                         <div className="symbol-option-info">

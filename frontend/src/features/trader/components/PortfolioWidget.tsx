@@ -4,6 +4,7 @@
 // ============================================
 
 import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Briefcase, DollarSign, TrendingUp, Lock } from 'lucide-react';
 import { useGameStore } from '../../../store/gameStore';
 import { useConfigStore } from '../../../store/configStore';
@@ -20,9 +21,15 @@ const formatPercent = (value: number) => {
 };
 
 export const PortfolioWidget: React.FC<PortfolioWidgetProps> = ({ onQuickSell }) => {
+    const navigate = useNavigate();
     const { money, lockedMoney, marginLocked, portfolio, orderBooks, setActiveSymbol, tradeHistory, requestTradeHistory } = useGameStore();
     const formatCurrency = useConfigStore(state => state.formatCurrency);
     const [activeTab, setActiveTab] = useState<'positions' | 'history'>('positions');
+
+    const handleSymbolClick = (symbol: string) => {
+        setActiveSymbol(symbol);
+        navigate(`/stock/${symbol}`);
+    };
 
     // Get P&L for each position - use server-provided values when available
     const getPositionPnL = useCallback((item: typeof portfolio[0]) => {
@@ -134,7 +141,13 @@ export const PortfolioWidget: React.FC<PortfolioWidgetProps> = ({ onQuickSell })
                                 return (
                                     <div key={item.symbol} className="holding-row">
                                         <div className="holding-info">
-                                            <span className="symbol">{item.symbol}</span>
+                                            <span 
+                                                className="symbol" 
+                                                style={{ cursor: 'pointer', color: 'var(--color-primary-light)' }}
+                                                onClick={() => handleSymbolClick(item.symbol)}
+                                            >
+                                                {item.symbol}
+                                            </span>
                                             <span className="position-details">
                                                 {item.qty} @ {formatCurrency(item.averageBuyPrice)}
                                             </span>

@@ -7,11 +7,13 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 // Layouts
-import { TraderLayout, AdminLayout } from './components/layout';
+import { AdminLayout, PublicLayout } from './components/layout';
 
 // Features
 import { LoginPage, RegisterPage, AuthGuard } from './features/auth';
-import { TradingDeskPage } from './features/trader/TradingDeskPage';
+import { CompaniesListPage } from './features/trader/CompaniesListPage';
+import { StockDetailPage } from './features/trader/StockDetailPage';
+import { UserSettingsPage } from './features/trader/UserSettingsPage';
 import { AdminDashboardPage } from './features/admin/DashboardPage';
 import { GameControlPage } from './features/admin/GameControlPage';
 import { TradersPage } from './features/admin/TradersPage';
@@ -35,21 +37,39 @@ const App: React.FC = () => {
     <ErrorBoundary>
       <BrowserRouter>
         <Routes>
-          {/* Public Routes */}
+          {/* Public Routes - no login required */}
+          <Route path="/" element={<PublicLayout />}>
+            <Route index element={<CompaniesListPage />} />
+            <Route path="stock/:symbol" element={<StockDetailPage />} />
+          </Route>
+
+          {/* Auth Pages */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
 
-          {/* Trader Routes */}
+          {/* Trader Routes - unified stock trading page */}
           <Route
             path="/trade"
             element={
               <AuthGuard requiredRole="trader">
-                <TraderLayout />
+                <PublicLayout />
               </AuthGuard>
             }
           >
-            <Route index element={<TradingDeskPage />} />
+            {/* Redirect /trade to the first stock or companies list */}
+            <Route index element={<Navigate to="/" replace />} />
+            <Route path="stock/:symbol" element={<StockDetailPage />} />
           </Route>
+
+          {/* User Settings */}
+          <Route
+            path="/settings"
+            element={
+              <AuthGuard requiredRole="trader">
+                <UserSettingsPage />
+              </AuthGuard>
+            }
+          />
 
           {/* Admin Routes */}
           <Route
@@ -70,9 +90,8 @@ const App: React.FC = () => {
             <Route path="diagnostics" element={<DiagnosticsPage />} />
           </Route>
 
-          {/* Default Redirect */}
-          <Route path="/" element={<Navigate to="/login" replace />} />
-          <Route path="*" element={<Navigate to="/login" replace />} />
+          {/* Fallback - redirect to landing page */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
     </ErrorBoundary>

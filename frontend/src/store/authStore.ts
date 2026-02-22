@@ -12,6 +12,7 @@ interface AuthState {
     user: User | null;
     isAuthenticated: boolean;
     isLoading: boolean;
+    isReconnecting: boolean;  // True when restoring session on page refresh
     error: string | null;
 
     // Actions
@@ -21,10 +22,11 @@ interface AuthState {
     logout: () => void;
     setUser: (user: Partial<User>) => void;
     clearError: () => void;
+    setReconnecting: (value: boolean) => void;
 
     // Internal
     _handleAuthSuccess: (userId: number, name: string, role: UserRole) => void;
-    _handleAuthFailed: (reason: string) => void;
+    _handleAuthFailed: (reason: string, isReconnection?: boolean) => void;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -33,10 +35,11 @@ export const useAuthStore = create<AuthState>()(
             user: null,
             isAuthenticated: false,
             isLoading: false,
+            isReconnecting: false,
             error: null,
 
             login: async (regno: string, password: string) => {
-                set({ isLoading: true, error: null });
+                set({ isLoading: true, error: null, isReconnecting: false });
 
                 // Use Login message for username+password authentication
                 websocketService.send({
@@ -49,7 +52,7 @@ export const useAuthStore = create<AuthState>()(
             },
 
             loginAdmin: async (username: string, password: string) => {
-                set({ isLoading: true, error: null });
+                set({ isLoading: true, error: null, isReconnecting: false });
 
                 // Use Login message for admin authentication - role is validated server-side
                 websocketService.send({
@@ -59,7 +62,7 @@ export const useAuthStore = create<AuthState>()(
             },
 
             register: async (regno: string, name: string, password: string) => {
-                set({ isLoading: true, error: null });
+                set({ isLoading: true, error: null, isReconnecting: false });
 
                 websocketService.send({
                     type: 'Register',
@@ -73,6 +76,7 @@ export const useAuthStore = create<AuthState>()(
                     user: null,
                     isAuthenticated: false,
                     isLoading: false,
+                    isReconnecting: false,
                     error: null
                 });
             },
@@ -87,6 +91,8 @@ export const useAuthStore = create<AuthState>()(
             },
 
             clearError: () => set({ error: null }),
+
+            setReconnecting: (value: boolean) => set({ isReconnecting: value }),
 
             _handleAuthSuccess: (userId: number, name: string, role: UserRole) => {
                 websocketService.setSessionToken(String(userId));
@@ -107,14 +113,20 @@ export const useAuthStore = create<AuthState>()(
                     },
                     isAuthenticated: true,
                     isLoading: false,
+                    isReconnecting: false,
                     error: null
                 });
             },
 
-            _handleAuthFailed: (reason: string) => {
+            _handleAuthFailed: (reason: string, isReconnection = false) => {
+                // Clear auth state on failure
+                websocketService.clearSessionToken();
                 set({
+                    user: null,
+                    isAuthenticated: false,
                     isLoading: false,
-                    error: reason
+                    isReconnecting: false,
+                    error: isReconnection ? null : reason  // Don't show error on reconnection failure
                 });
             }
         }),
@@ -138,7 +150,11 @@ websocketService.on('AuthSuccess', (payload: { user_id: number; name: string; ro
 });
 
 websocketService.on('AuthFailed', (payload: { reason: string }) => {
-    useAuthStore.getState()._handleAuthFailed(payload.reason);
+    // Only clear auth if this was a reconnection attempt
+    const { isReconnecting, isAuthenticated } = useAuthStore.getState();
+    if (isReconnecting || isAuthenticated) {
+        useAuthStore.getState()._handleAuthFailed(payload.reason, true);
+    }
 });
 
 websocketService.on('RegisterSuccess', (payload: { user_id: number; name: string; role: string }) => {
@@ -151,11 +167,55 @@ websocketService.on('RegisterFailed', (payload: { reason: string }) => {
     useAuthStore.getState()._handleAuthFailed(payload.reason);
 });
 
+// Handle page refresh / reconnection
+// Check if we have stored auth that needs to be verified
+const storedAuth = localStorage.getItem('auth-storage');
+const sessionToken = localStorage.getItem('session_token');
+
+if (storedAuth && sessionToken) {
+    try {
+        const parsed = JSON.parse(storedAuth);
+        if (parsed.state?.isAuthenticated && parsed.state?.user?.id) {
+            // We have stored auth, mark as reconnecting until verified
+            useAuthStore.setState({ isReconnecting: true });
+            
+            // If WebSocket is already connected, send auth immediately
+            if (websocketService.getConnectionStatus()) {
+                websocketService.send({ type: 'Auth', payload: { token: sessionToken } });
+            }
+        }
+    } catch {
+        // Invalid storage, clear it
+        localStorage.removeItem('auth-storage');
+        localStorage.removeItem('session_token');
+    }
+}
+
 // Auto-login on reconnect if we have stored auth
 websocketService.on('connected', () => {
     const token = websocketService.getSessionToken();
-    if (token) {
+    const { isReconnecting, isAuthenticated } = useAuthStore.getState();
+    
+    if (token && (isReconnecting || isAuthenticated)) {
+        // Send auth request to verify session
         websocketService.send({ type: 'Auth', payload: { token } });
+    }
+});
+
+// Handle auth-specific errors (e.g., token expired, invalid token)
+websocketService.on('Error', (payload: { code?: string; message?: string }) => {
+    // If we get an auth-related error, clear the auth state
+    if (payload.code === 'NOT_AUTHENTICATED' || payload.code === 'AUTH_FAILED' || 
+        payload.message?.toLowerCase().includes('auth') ||
+        payload.message?.toLowerCase().includes('token')) {
+        websocketService.clearSessionToken();
+        useAuthStore.setState({
+            user: null,
+            isAuthenticated: false,
+            isLoading: false,
+            isReconnecting: false,
+            error: payload.message || 'Session expired. Please login again.'
+        });
     }
 });
 

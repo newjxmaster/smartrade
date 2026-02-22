@@ -89,7 +89,7 @@ const StatsCards: React.FC<{ companies: UICompany[] }> = ({ companies }) => {
 interface CreateCompanyModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onSubmit: (company: Partial<UICompany>) => void;
+    onSubmit: (company: Partial<UICompany> & { totalShares?: number; initialPrice?: number; pricePrecision?: number }) => void;
 }
 
 const CreateCompanyModal: React.FC<CreateCompanyModalProps> = ({ isOpen, onClose, onSubmit }) => {
@@ -97,7 +97,11 @@ const CreateCompanyModal: React.FC<CreateCompanyModalProps> = ({ isOpen, onClose
     const [name, setName] = useState('');
     const [sector, setSector] = useState('Tech');
     const [volatility, setVolatility] = useState('0.25');
+    const [totalShares, setTotalShares] = useState('1000000');
+    const [initialPrice, setInitialPrice] = useState('100');
+    const [pricePrecision, setPricePrecision] = useState('2');
     const [isLoading, setIsLoading] = useState(false);
+    const [showAdvanced, setShowAdvanced] = useState(false);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -108,6 +112,9 @@ const CreateCompanyModal: React.FC<CreateCompanyModalProps> = ({ isOpen, onClose
             name,
             sector,
             volatility: parseFloat(volatility),
+            totalShares: parseInt(totalShares) || 1000000,
+            initialPrice: Math.round((parseFloat(initialPrice) || 100) * 100), // Convert to PRICE_SCALE
+            pricePrecision: parseInt(pricePrecision) || 2,
         });
 
         setTimeout(() => {
@@ -116,6 +123,10 @@ const CreateCompanyModal: React.FC<CreateCompanyModalProps> = ({ isOpen, onClose
             setName('');
             setSector('Tech');
             setVolatility('0.25');
+            setTotalShares('1000000');
+            setInitialPrice('100');
+            setPricePrecision('2');
+            setShowAdvanced(false);
             onClose();
         }, 1000);
     };
@@ -123,11 +134,11 @@ const CreateCompanyModal: React.FC<CreateCompanyModalProps> = ({ isOpen, onClose
     if (!isOpen) return null;
 
     return (
-        <Modal title="Create New Company" onClose={onClose} isOpen={isOpen}>
+        <Modal title="Create New Company (IPO)" onClose={onClose} isOpen={isOpen}>
             <form onSubmit={handleSubmit}>
                 <div className="space-y-4">
                     <div className="input-group">
-                        <label className="input-label">Symbol</label>
+                        <label className="input-label">Symbol *</label>
                         <input
                             type="text"
                             className="input"
@@ -141,7 +152,7 @@ const CreateCompanyModal: React.FC<CreateCompanyModalProps> = ({ isOpen, onClose
                     </div>
 
                     <div className="input-group">
-                        <label className="input-label">Company Name</label>
+                        <label className="input-label">Company Name *</label>
                         <input
                             type="text"
                             className="input"
@@ -153,7 +164,7 @@ const CreateCompanyModal: React.FC<CreateCompanyModalProps> = ({ isOpen, onClose
                     </div>
 
                     <div className="input-group">
-                        <label className="input-label">Sector</label>
+                        <label className="input-label">Sector *</label>
                         <select
                             className="input"
                             value={sector}
@@ -186,16 +197,103 @@ const CreateCompanyModal: React.FC<CreateCompanyModalProps> = ({ isOpen, onClose
                         </div>
                     </div>
 
-                    <div className="p-3 rounded-lg" style={{ background: 'var(--bg-tertiary)' }}>
-                        <div className="text-sm text-muted">
-                            <strong>Default Values:</strong>
-                            <ul className="mt-2 space-y-1">
-                                <li>• Total Shares: 1,000,000</li>
-                                <li>• Initial Price: $100.00</li>
-                                <li>• Price Precision: 2 decimals</li>
-                            </ul>
+                    {/* Advanced Options Toggle */}
+                    <button
+                        type="button"
+                        onClick={() => setShowAdvanced(!showAdvanced)}
+                        style={{
+                            width: '100%',
+                            padding: '12px 16px',
+                            background: showAdvanced ? 'var(--bg-tertiary)' : 'transparent',
+                            border: '2px dashed var(--border-secondary)',
+                            borderRadius: 'var(--radius-lg)',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '8px',
+                            color: 'var(--color-primary)',
+                            fontWeight: 500,
+                            transition: 'all 150ms ease',
+                        }}
+                        onMouseEnter={(e) => {
+                            e.currentTarget.style.borderColor = 'var(--color-primary)';
+                            e.currentTarget.style.background = 'var(--bg-tertiary)';
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.borderColor = 'var(--border-secondary)';
+                            if (!showAdvanced) {
+                                e.currentTarget.style.background = 'transparent';
+                            }
+                        }}
+                    >
+                        <span style={{ fontSize: '18px' }}>{showAdvanced ? '−' : '+'}</span>
+                        <span>{showAdvanced ? 'Hide Advanced Options' : 'Show Advanced Options'}</span>
+                    </button>
+
+                    {showAdvanced && (
+                        <div className="space-y-4 p-4 rounded-lg" style={{ background: 'var(--bg-tertiary)' }}>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="input-group">
+                                    <label className="input-label">Total Shares</label>
+                                    <input
+                                        type="number"
+                                        className="input"
+                                        placeholder="1000000"
+                                        value={totalShares}
+                                        onChange={(e) => setTotalShares(e.target.value)}
+                                        min="1000"
+                                        step="1000"
+                                    />
+                                    <span className="text-xs text-muted">Default: 1,000,000</span>
+                                </div>
+
+                                <div className="input-group">
+                                    <label className="input-label">Initial Price (F.CFA)</label>
+                                    <input
+                                        type="number"
+                                        className="input"
+                                        placeholder="100.00"
+                                        value={initialPrice}
+                                        onChange={(e) => setInitialPrice(e.target.value)}
+                                        min="0.01"
+                                        step="0.01"
+                                    />
+                                    <span className="text-xs text-muted">Default: 100 F.CFA</span>
+                                </div>
+                            </div>
+
+                            <div className="input-group">
+                                <label className="input-label">Price Precision (decimals)</label>
+                                <select
+                                    className="input"
+                                    value={pricePrecision}
+                                    onChange={(e) => setPricePrecision(e.target.value)}
+                                >
+                                    <option value="0">0 decimals (100 F.CFA)</option>
+                                    <option value="1">1 decimal (100.0 F.CFA)</option>
+                                    <option value="2">2 decimals (100.00 F.CFA)</option>
+                                    <option value="3">3 decimals (100.000 F.CFA)</option>
+                                    <option value="4">4 decimals (100.0000 F.CFA)</option>
+                                </select>
+                                <span className="text-xs text-muted">Default: 2 decimals</span>
+                            </div>
                         </div>
-                    </div>
+                    )}
+
+                    {!showAdvanced && (
+                        <div className="p-3 rounded-lg" style={{ background: 'var(--bg-tertiary)' }}>
+                            <div className="text-sm text-muted">
+                                <strong>Using Defaults:</strong>
+                                <ul className="mt-2 space-y-1">
+                                    <li>• Total Shares: {parseInt(totalShares).toLocaleString()}</li>
+                                    <li>• Initial Price: {parseFloat(initialPrice).toFixed(0)} F.CFA</li>
+                                    <li>• Price Precision: {pricePrecision} decimals</li>
+                                    <li>• Initial liquidity will be seeded automatically</li>
+                                </ul>
+                            </div>
+                        </div>
+                    )}
                 </div>
 
                 <div className="flex gap-3 mt-6">
@@ -436,15 +534,32 @@ export const CompaniesPage: React.FC = () => {
     );
 
     // Handlers
-    const handleCreateCompany = (company: Partial<UICompany>) => {
+    const handleCreateCompany = (company: Partial<UICompany> & { totalShares?: number; initialPrice?: number; pricePrecision?: number }) => {
+        const payload: Record<string, unknown> = {
+            symbol: company.symbol,
+            name: company.name,
+            sector: company.sector,
+            volatility: Math.round((company.volatility || 0.25) * 100), // Convert decimal to integer (0.25 -> 25)
+        };
+        
+        // Add optional fields if provided (different from defaults)
+        if (company.totalShares && company.totalShares !== 1000000) {
+            payload.total_shares = company.totalShares;
+        }
+        if (company.initialPrice && company.initialPrice !== 10000) { // 100 * 100 PRICE_SCALE
+            payload.initial_price = company.initialPrice;
+        }
+        if (company.pricePrecision && company.pricePrecision !== 2) {
+            payload.price_precision = company.pricePrecision;
+        }
+        
         websocketService.send({
             type: 'AdminAction',
             payload: {
                 action: 'CreateCompany',
-                payload: company
+                payload
             }
         });
-        // Backend will send updated CompanyList
     };
 
     const handleSetVolatility = (symbol: string, volatility: number) => {
